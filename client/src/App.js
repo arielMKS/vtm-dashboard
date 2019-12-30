@@ -13,18 +13,20 @@ const books = [
   { id: 3, title: "four" }
 ];
 
-function App() {
-  return (
-    <div className="">
-      <Layout books={books}>
-        <Switch>
-          <Route exact path="/" component={Layout}></Route>
-          <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/dashboard" component={Dashboard}></Route>
-        </Switch>
-      </Layout>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="">
+        <Layout books={books}>
+          <Switch>
+            <Route exact path="/" component={Layout}></Route>
+            <Route exact path="/login" component={Login}></Route>
+            <Route exact path="/dashboard" component={Dashboard}></Route>
+          </Switch>
+        </Layout>
+      </div>
+    );
+  }
 }
 
 export default App;

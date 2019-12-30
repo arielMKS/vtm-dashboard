@@ -1,4 +1,5 @@
 import React from "react";
+import Compose from "compose";
 import { MenuList, MenuItem, AppBar } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -12,13 +13,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     display: "flex"
   },
@@ -57,106 +58,107 @@ const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4)
   }
-}));
+});
 
 // LAYOUT COMPONENT HERE
-function Layout(props) {
-  const { container, children, books } = props;
-  const classes = useStyles();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    console.log("Layout ue firing", props);
-  });
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+class Layout extends React.Component {
+  state = {
+    mobileOpen: false
   };
 
-  const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <MenuList>
-        <MenuItem component={Link} to="/">
-          Home
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/dashboard">
-          Dashboard
-        </MenuItem>
-        <Divider />
-        <MenuItem component={Link} to="/login">
-          Login
-        </MenuItem>
-        <Divider />
-        <MenuList>
-          {/* RENDER BOOKS HERE */}
-          {books.map(book => (
-            <MenuItem className={classes.nested} key={book.id}>
-              {book.title}
-            </MenuItem>
-          ))}
-        </MenuList>
-      </MenuList>
-    </div>
-  );
+  handleDrawerToggle = () => {
+    // setMobileOpen(!mobileOpen);
+    this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <Menu />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            ModalProps={{
-              keepMounted: true // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <main className={classes.content}>
+  render() {
+    const { container, children, classes, books } = this.props;
+    // const classes = useStyles();
+    // const theme = useTheme();
+    // const classes = this.useStyles();
+    const drawer = (
+      <div>
         <div className={classes.toolbar} />
-        {/* {children} */}
-      </main>
-    </div>
-  );
+        <MenuList>
+          <MenuItem component={Link} to="/">
+            Home
+          </MenuItem>
+          <Divider />
+          <MenuItem component={Link} to="/dashboard">
+            Dashboard
+          </MenuItem>
+          <Divider />
+          <MenuItem component={Link} to="/login">
+            Login
+          </MenuItem>
+          <Divider />
+          <MenuList>
+            {/* RENDER BOOKS HERE */}
+            {books.map(book => (
+              <MenuItem className={classes.nested} key={book.id}>
+                {book.title}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </MenuList>
+      </div>
+    );
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={this.handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <Menu />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              Responsive drawer
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={this.mobileOpen}
+              onClose={this.handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              ModalProps={{
+                keepMounted: true // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {children}
+        </main>
+      </div>
+    );
+  }
 }
 
-export default Layout;
+// export default compose(withRouter, withStyles(styles))(Layout);
+export default withStyles(styles)(Layout);
