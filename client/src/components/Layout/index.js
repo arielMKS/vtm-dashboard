@@ -67,14 +67,11 @@ function Layout(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    // console.log("Layout ue firing props", props);
-  });
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // the drawer shows up on the left side of the UI
   const drawer = (
     <div>
       <div className={classes.toolbar} />

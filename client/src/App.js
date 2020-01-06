@@ -20,11 +20,14 @@ function App() {
       <Layout authors={authors}>
         <Switch>
           {/* <Route exact path="/" component={Layout}> Home </Route> */}
-          <Route exact path="/" render={() => <div>Home</div>}></Route>
+          <Route exact path="/" render={() => <div>Home</div>} />
           <Route
+            // exact **IMPORTANT: do not use exact here
             path="/writers"
-            render={props => <Writers authors={authors} />}
-          ></Route>
+            // **IMPORTANT: "props" refer to "history", "location", and "match"
+            render={props => <Writers {...props} authors={authors} />}
+          />
+          <Route render={() => <div>Not found</div>}></Route>
         </Switch>
       </Layout>
     </div>
