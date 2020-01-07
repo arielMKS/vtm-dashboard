@@ -8,13 +8,13 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { Link, withRouter } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
@@ -53,7 +53,11 @@ const styles = theme => ({
   nested: {
     paddingLeft: theme.spacing(4)
   }
-});
+}));
+
+// const styles = theme => ({
+
+// });
 
 // LAYOUT COMPONENT HERE
 function Layout(props) {
