@@ -25,13 +25,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   appBar: {
-    // use for responsive drawer
-    // [theme.breakpoints.up("sm")]: {
-    //   width: `calc(100% - ${drawerWidth}px)`,
-    //   marginLeft: drawerWidth
-    // }
-    // use for clipped drawer
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: "red"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -48,28 +43,28 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   listItem: {
-    border: "2px solid red"
+    // border: "2px solid red"
   },
   nested: {
     paddingLeft: theme.spacing(4)
   }
 }));
 
-// const styles = theme => ({
-
-// });
-
 // LAYOUT COMPONENT HERE
 function Layout(props) {
   const {
     container,
     children,
-    authors,
     location: { pathname }
   } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log("PROPS", pathname);
+  });
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -80,40 +75,45 @@ function Layout(props) {
     <div>
       <div className={classes.toolbar} />
       <MenuList>
-        <MenuItem component={Link} to="/" selected={"/" === pathname}>
-          Home
-        </MenuItem>
-
-        <Divider />
-
         <MenuItem
           component={Link}
-          to="/writers"
-          selected={"/writers" === pathname}
+          to="/machines"
+          selected={"/machines" === pathname}
         >
-          Writers
+          Machines
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          to="/locations"
+          selected={"/locations" === pathname}
+        >
+          Locations
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          to="/products"
+          selected={"/products" === pathname}
+        >
+          Products
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          to="/reports"
+          selected={"/reports" === pathname}
+        >
+          Reports
+        </MenuItem>
+        <MenuItem component={Link} to="/media">
+          Media
+        </MenuItem>
+        <MenuItem component={Link} to="/userManagement">
+          User Management
+        </MenuItem>
+        <MenuItem component={Link} to="/logout">
+          Logout
         </MenuItem>
 
         <Divider />
-
-        <MenuList>
-          {/* RENDER AUTHORS HERE */}
-          {authors &&
-            authors.map(author => {
-              const to = `/writers/${author.id}`;
-              return (
-                <MenuItem
-                  component={Link}
-                  to={to}
-                  selected={to === pathname}
-                  className={classes.nested}
-                  key={author.id}
-                >
-                  {author.name}
-                </MenuItem>
-              );
-            })}
-        </MenuList>
       </MenuList>
     </div>
   );
@@ -121,7 +121,11 @@ function Layout(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar
+        style={{ background: "black" }}
+        position="fixed"
+        className={classes.appBar}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -132,9 +136,11 @@ function Layout(props) {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
+
+          <Typography variant="h4" noWrap>
+            ViaTouch Media
           </Typography>
+          {/* <img src="viatouch.png"></img> */}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

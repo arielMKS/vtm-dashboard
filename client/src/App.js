@@ -1,32 +1,26 @@
 import React from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
-
+import { Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Writers from "./components/Writers";
-import Dashboard from "./page/Dashboard";
-
-// const books = ["one", "two", "three", "four"];
-const authors = [
-  { id: 0, name: "Ralph Waldo Emerson" },
-  { id: 1, name: "Friedrich Nietzsche" },
-  { id: 2, name: "Carl Jung" },
-  { id: 3, name: "Joseph Campbell" },
-  { id: 4, name: "Rajneesh Osho" }
-];
+import Machines from "./components/Machines";
+import Locations from "./components/Locations";
+import Products from "./components/Products";
+import Reports from "./components/Reports";
+import Media from "./components/Media";
+import UserManagement from "./components/UserManagement";
+import Logout from "./components/Logout";
 
 function App() {
   return (
-    <div className="">
-      <Layout authors={authors}>
+    <div style={{ backgroundColor: "gray", height: "100vh" }}>
+      <Layout>
         <Switch>
-          {/* <Route exact path="/" component={Layout}> Home </Route> */}
-          <Route exact path="/" render={() => <div>Home</div>} />
-          <Route
-            // exact **IMPORTANT: do not use exact here
-            path="/writers"
-            // **IMPORTANT: "props" refer to "history", "location", and "match"
-            render={props => <Writers {...props} authors={authors} />}
-          />
+          <Route path="/machines" component={Machines} />
+          <Route path="/locations" component={Locations} />
+          <Route path="/products" component={Products} />
+          <Route path="/reports" component={Reports} />
+          <Route path="/media" component={Media} />
+          <Route path="/userManagement" component={UserManagement} />
+          <Route path="/logout" component={Logout} />
           <Route render={() => <div>Not found</div>}></Route>
         </Switch>
       </Layout>
