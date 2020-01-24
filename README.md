@@ -1,11 +1,16 @@
+# Welcome to ViaTouch Media Dashboard
+
+<img src="./client/public/viatouch.png">
+
 # Steps to run this application on your local machine:
 
-1. Open the terminal and navigate to the "client" folder.
+1. Clone this repo on your local machine. Run command:
+   "git clone https://github.com/arielMKS/vtm-dashboard.git"
 
-2. Run this command to install required dependencies.
+2. Go to the "client" folder and install the required dependencies. Run command:
    "npm install"
 
-3. Next run the following command on the "client" folder.
+3. After successful installation, run command::
    "npm start"
 
-4. The browser will open and go to localhost:3000 to start the application
+4. The browser will launch and open a tab on localhost:3000 to start the application.
